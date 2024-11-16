@@ -49,6 +49,6 @@ def transfer():
         accounts[to_user]["balance"] += amount
         return jsonify({"message": "Transfer successful"}), 200
     return jsonify({"error": "Transfer failed"}), 400
-
+    
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
