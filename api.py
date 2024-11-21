@@ -134,5 +134,21 @@ def account_statement(username):
 
     return jsonify(statement), 200
 
+@app.route('/delete_account', methods=['DELETE'])
+def delete_account():
+    data = request.json
+    username = data.get("username")
+
+    if username in accounts:
+        del accounts[username]
+        return jsonify({"message": "Account deleted successfully"}), 200
+    return jsonify({"error": "Account not found"}), 400
+
+# New Endpoint: View all accounts and their information
+@app.route('/view_all_accounts', methods=['GET'])
+def view_all_accounts():
+    return jsonify(accounts), 200
+    
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
