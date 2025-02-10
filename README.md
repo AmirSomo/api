@@ -36,5 +36,4 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 License
 
 This project is licensed under the MIT License.
-Feel free to customize these README files further to align with the specific details and functionalities of your projects.
-![image](https://github.com/user-attachments/assets/28bb79c8-6126-488a-8965-587f8271b54f)
+
