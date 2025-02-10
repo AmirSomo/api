@@ -8,7 +8,6 @@ app = Flask(__name__)
 accounts = {}
 transactions = {}
 
-# Helper function: Create a transaction entry
 def create_transaction(account_id, amount, transaction_type, recipient_id=None):
     transaction_id = str(uuid.uuid4())
     transactions[transaction_id] = {
@@ -20,7 +19,7 @@ def create_transaction(account_id, amount, transaction_type, recipient_id=None):
     }
     return transaction_id
 
-# Endpoint: Create a new account
+#Create a new account
 @app.route('/create_account', methods=['POST'])
 def create_account():
     data = request.json
@@ -40,7 +39,7 @@ def create_account():
     create_transaction(account_id, initial_balance, "Account Creation")
     return jsonify({"message": "Account created successfully", "account_id": account_id}), 201
 
-# Endpoint: Get account balance
+# Get account balance
 @app.route('/balance/<username>', methods=['GET'])
 def get_balance(username):
     account = accounts.get(username)
@@ -49,7 +48,7 @@ def get_balance(username):
 
     return jsonify({"balance": account["balance"]}), 200
 
-# Endpoint: Deposit money
+# Deposit money
 @app.route('/deposit', methods=['POST'])
 def deposit():
     data = request.json
@@ -65,7 +64,7 @@ def deposit():
     create_transaction(accounts[username]["id"], amount, "Deposit")
     return jsonify({"message": "Deposit successful", "balance": accounts[username]["balance"]}), 200
 
-# Endpoint: Withdraw money
+#Withdraw money
 @app.route('/withdraw', methods=['POST'])
 def withdraw():
     data = request.json
@@ -83,7 +82,7 @@ def withdraw():
     create_transaction(accounts[username]["id"], -amount, "Withdrawal")
     return jsonify({"message": "Withdrawal successful", "balance": accounts[username]["balance"]}), 200
 
-# Endpoint: Transfer money between accounts
+#Transfer money between accounts
 @app.route('/transfer', methods=['POST'])
 def transfer():
     data = request.json
@@ -106,7 +105,7 @@ def transfer():
 
     return jsonify({"message": "Transfer successful"}), 200
 
-# Endpoint: Get all transactions for a user
+# Get all transactions for a user
 @app.route('/transactions/<username>', methods=['GET'])
 def get_transactions(username):
     account = accounts.get(username)
@@ -120,7 +119,7 @@ def get_transactions(username):
 
     return jsonify({"transactions": user_transactions}), 200
 
-# Endpoint: Get account statement
+#Get account statement
 @app.route('/account_statement/<username>', methods=['GET'])
 def account_statement(username):
     account = accounts.get(username)
@@ -142,7 +141,7 @@ def account_statement(username):
 
     return jsonify(statement), 200
 
-# Endpoint: Delete an account
+# Delete an account
 @app.route('/delete_account', methods=['DELETE'])
 def delete_account():
     data = request.json
@@ -153,11 +152,10 @@ def delete_account():
         return jsonify({"message": "Account deleted successfully"}), 200
     return jsonify({"error": "Account not found"}), 400
 
-# Endpoint: View all accounts and their information
+#View all accounts and their information
 @app.route('/view_all_accounts', methods=['GET'])
 def view_all_accounts():
     return jsonify(accounts), 200
 
-# Run the application
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
